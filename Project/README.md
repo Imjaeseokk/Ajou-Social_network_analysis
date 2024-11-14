@@ -1,7 +1,26 @@
 # Sentiment Analysis and Recommend System Project"
 
-이 프로젝트는 Python 가상 환경에서 실행됩니다. 다음 단계를 따라 가상 환경을 생성하고 활성화하세요.
+This project runs in a Python virtual environment. Follow these steps to create and activate the virtual environment.
 
-### 1. 가상 환경 생성
+### 1. Create a Virtual Environment
 ```bash
 python -m venv myenv
+```
+
+### 2. Activate the Virtual Environment
+- **Windows**:
+  ```bash
+  myenv\Scripts\activate
+  ```
+- **macOS/Linux**:
+  ```bash
+  source myenv/bin/activate
+  ```
+
+### 3. Install Required Packages
+With the virtual environment activated, install all necessary packages using the `requirements.txt` file:
+```bash
+pip install -r requirements.txt
+```
+
+Now the code and environment for the project are properly set up.
