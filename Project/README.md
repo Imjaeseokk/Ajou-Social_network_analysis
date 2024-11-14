@@ -4,17 +4,17 @@ This project runs in a Python virtual environment. Follow these steps to create 
 
 ### 1. Create a Virtual Environment
 ```bash
-python -m venv myenv
+python -m venv project
 ```
 
 ### 2. Activate the Virtual Environment
 - **Windows**:
   ```bash
-  myenv\Scripts\activate
+  roject\Scripts\activate
   ```
 - **macOS/Linux**:
   ```bash
-  source myenv/bin/activate
+  source roject/bin/activate
   ```
 
 ### 3. Install Required Packages
