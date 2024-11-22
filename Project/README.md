@@ -10,11 +10,11 @@ python -m venv project
 ### 2. Activate the Virtual Environment
 - **Windows**:
   ```bash
-  roject\Scripts\activate
+  project\Scripts\activate
   ```
 - **macOS/Linux**:
   ```bash
-  source roject/bin/activate
+  source project/bin/activate
   ```
 
 ### 3. Install Required Packages
