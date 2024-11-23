@@ -13,11 +13,13 @@ import nltk
 from vaderSentiment.vaderSentiment import SentimentIntensityAnalyzer
 from nrclex import NRCLex
 
-
+nltk.download('punkt')
+nltk.download('stopwords') 
+nltk.download('averaged_perceptron_tagger')  
 
 current_directory = os.getcwd()
 
-csv_path = r"D:\융시공\3학년 2학기\Ajou_SocialNetworkAnalysis\Project\song-lyrics-dataset\csv"
+csv_path = r"C:\Users\kakao\Desktop\Ajou_SocialNetworkAnalysis\Project\song-lyrics-dataset\csv"
 
 artists = os.listdir(csv_path)
 for artist in artists:
@@ -64,3 +66,4 @@ print(df1.head())
 df1.to_csv("./emotion_lyric/Taylor_Swift.csv")
 
 # 테일러 스위프트 노래별 가사를 emotion 분석한 결과를 .csv로 저장함
+
