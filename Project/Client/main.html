@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>트렌디한 앨범 추천 페이지</title>
+  <title>Main Page</title>
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -14,6 +14,17 @@
       display: flex;
       flex-direction: column;
       align-items: center;
+    }
+        .logo-text {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      font-size: 25px;
+      font-weight: bold;
+      letter-spacing: 2px;
+      color: white;
+      text-transform: uppercase;
+      font-family: 'Arial Black', sans-serif; /* 모던한 느낌의 Bold 글씨체 */
     }
     h1 {
       margin: 20px;
@@ -81,13 +92,18 @@
   </style>
 </head>
 <body>
-  <h1>Choose Your Favorite Artists</h1>
+  <h1>Choose Your Favorite Songs</h1>
   <div id="music-container">
     <div id="music-grid">
       <!-- Example Albums -->
     </div>
   </div>
   <button id="next-button">Move to Next</button>
+
+    <!-- 로고 텍스트 -->
+  <div class="logo-text">DIVE TO VIBE</div>
+
+
 
   <script>
     // Example 데이터
