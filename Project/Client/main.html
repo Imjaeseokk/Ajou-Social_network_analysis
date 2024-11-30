@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>트렌디한 앨범 추천 페이지</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #121212;
+      color: white;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    h1 {
+      margin: 20px;
+    }
+    #music-container {
+      width: 90%; /* 좌우 여백 추가 */
+      display: flex;
+      justify-content: center;
+    }
+    #music-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr); /* 한 줄에 3개 */
+      gap: 40px; /* 이미지 간격 조정 */
+      justify-content: center; /* 중앙 정렬 */
+      margin-bottom: 20px;
+    }
+    .album {
+      text-align: center;
+      background: #1e1e1e;
+      padding: 10px;
+      border-radius: 50%; /* 동그란 디자인 */
+      transition: transform 0.2s;
+      overflow: hidden; /* 이미지를 영역 밖으로 넘기지 않음 */
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+    .album:hover {
+      transform: scale(1.1); /* 호버 시 확대 */
+    }
+    .album img {
+      width: 100px;
+      height: 100px;
+      border-radius: 50%; /* 동그랗게 처리 */
+      object-fit: cover; /* 이미지 비율 유지 */
+    }
+    .song-title {
+      font-size: 14px;
+      margin: 10px 0 5px;
+      text-overflow: ellipsis;
+      overflow: hidden;
+      white-space: nowrap;
+    }
+    .artist-name {
+      font-size: 12px;
+      color: #888;
+    }
+ #next-button {
+      margin: 20px;
+      padding: 10px 20px;
+      background-color: transparent;
+      color: #ccc;
+      border: 1px solid #555;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 16px;
+      transition: all 0.3s;
+    }
+    #next-button:hover {
+      background-color: #333;
+      color: white;
+      border-color: white;
+    }
+  </style>
+</head>
+<body>
+  <h1>Choose Your Favorite Artists</h1>
+  <div id="music-container">
+    <div id="music-grid">
+      <!-- Example Albums -->
+    </div>
+  </div>
+  <button id="next-button">Move to Next</button>
+
+  <script>
+    // Example 데이터
+    const exampleData = Array.from({ length: 30 }, (_, i) => (/* 10줄 * 3개/줄 = 30개 */{
+      title: `Artist ${i + 1}`,
+      artist: `Genre ${i + 1}`,
+      albumArt: "https://via.placeholder.com/100"
+    }));
+
+    const musicGrid = document.getElementById("music-grid");
+
+    // 앨범 데이터 표시
+    exampleData.forEach(song => {
+      const album = document.createElement("div");
+      album.classList.add("album");
+      album.innerHTML = `
+        <img src="${song.albumArt}" alt="${song.title}" />
+        <div class="song-title">${song.title}</div>
+        <div class="artist-name">${song.artist}</div>
+      `;
+      musicGrid.appendChild(album);
+    });
+
+    // 다음 화면 이동 버튼 이벤트
+    const nextButton = document.getElementById("next-button");
+    nextButton.addEventListener("click", () => {
+      window.location.href = "personer_lyric.html"; // 다음 화면으로 이동
+    });
+  </script>
+</body>
+</html>
