@@ -5,7 +5,8 @@ import os
 os.environ["QT_QPA_PLATFORM_PLUGIN_PATH"] = "D:/융시공/3학년 2학기/Ajou_SocialNetworkAnalysis/Project/Lib/site-packages/PyQt5/Qt5/plugins"
 
 
-artists = ['ArianaGrande.csv',
+artists = \
+['ArianaGrande.csv',
  'Beyonce.csv',
  'BillieEilish.csv',
  'BTS.csv',
