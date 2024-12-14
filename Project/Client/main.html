@@ -15,7 +15,7 @@
       flex-direction: column;
       align-items: center;
     }
-        .logo-text {
+    .logo-text {
       position: absolute;
       top: 10px;
       left: 10px;
@@ -24,43 +24,47 @@
       letter-spacing: 2px;
       color: white;
       text-transform: uppercase;
-      font-family: 'Arial Black', sans-serif; /* 모던한 느낌의 Bold 글씨체 */
+      font-family: 'Arial Black', sans-serif;
     }
     h1 {
       margin: 20px;
     }
     #music-container {
-      width: 90%; /* 좌우 여백 추가 */
+      width: 90%;
       display: flex;
       justify-content: center;
     }
     #music-grid {
       display: grid;
-      grid-template-columns: repeat(3, 1fr); /* 한 줄에 3개 */
-      gap: 40px; /* 이미지 간격 조정 */
-      justify-content: center; /* 중앙 정렬 */
+      grid-template-columns: repeat(3, 1fr);
+      gap: 60px;
+      justify-content: center;
       margin-bottom: 20px;
     }
     .album {
       text-align: center;
       background: #1e1e1e;
       padding: 10px;
-      border-radius: 50%; /* 동그란 디자인 */
-      transition: transform 0.2s;
-      overflow: hidden; /* 이미지를 영역 밖으로 넘기지 않음 */
+      border-radius: 50%;
+      transition: transform 0.2s, background-color 0.2s;
+      overflow: hidden;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
+      cursor: pointer;
     }
     .album:hover {
-      transform: scale(1.1); /* 호버 시 확대 */
+      transform: scale(1.1);
+    }
+    .album.selected {
+      background-color: #333; /* 선택 시 배경색 변경 */
     }
     .album img {
       width: 100px;
       height: 100px;
-      border-radius: 50%; /* 동그랗게 처리 */
-      object-fit: cover; /* 이미지 비율 유지 */
+      border-radius: 50%;
+      object-fit: cover;
     }
     .song-title {
       font-size: 14px;
@@ -73,7 +77,7 @@
       font-size: 12px;
       color: #888;
     }
- #next-button {
+    #next-button {
       margin: 20px;
       padding: 10px 20px;
       background-color: transparent;
@@ -95,43 +99,78 @@
   <h1>Choose Your Favorite Songs</h1>
   <div id="music-container">
     <div id="music-grid">
-      <!-- Example Albums -->
+      <!-- Songs will be loaded dynamically -->
     </div>
   </div>
   <button id="next-button">Move to Next</button>
-
-    <!-- 로고 텍스트 -->
   <div class="logo-text">DIVE TO VIBE</div>
 
-
-
+  <!-- Load songList.js -->
+  <script src="songList.js"></script>
   <script>
-    // Example 데이터
-    const exampleData = Array.from({ length: 30 }, (_, i) => (/* 10줄 * 3개/줄 = 30개 */{
-      title: `Artist ${i + 1}`,
-      artist: `Genre ${i + 1}`,
-      albumArt: "https://via.placeholder.com/100"
-    }));
+    // 선택된 노래들을 저장하는 배열
+    const selectedSongs = [];
 
     const musicGrid = document.getElementById("music-grid");
 
-    // 앨범 데이터 표시
-    exampleData.forEach(song => {
+    // 노래를 클릭하면 선택/선택 해제 상태를 변경
+    const toggleSongSelection = (song) => {
+      const index = selectedSongs.findIndex(
+        (selected) => selected.title === song.title && selected.artist === song.artist
+      );
+
+      if (index > -1) {
+        // 이미 선택된 노래는 배열에서 제거
+        selectedSongs.splice(index, 1);
+      } else {
+        // 선택되지 않은 노래는 배열에 추가
+        selectedSongs.push(song);
+      }
+    };
+
+
+    // songList.js에서 데이터 로드 후 표시
+    songList.forEach(song => {
       const album = document.createElement("div");
       album.classList.add("album");
       album.innerHTML = `
-        <img src="${song.albumArt}" alt="${song.title}" />
+        <img src="https://via.placeholder.com/100" alt="${song.title}" />
         <div class="song-title">${song.title}</div>
         <div class="artist-name">${song.artist}</div>
       `;
+
+      // 클릭 이벤트 리스너 추가
+      album.addEventListener("click", () => {
+        album.classList.toggle("selected"); // 선택된 상태 CSS 변경
+        toggleSongSelection(song); // 선택 상태 업데이트
+        console.log("Selected Songs:", selectedSongs); // 디버깅: 선택된 노래 출력
+      });
+
       musicGrid.appendChild(album);
     });
 
-    // 다음 화면 이동 버튼 이벤트
-    const nextButton = document.getElementById("next-button");
-    nextButton.addEventListener("click", () => {
-      window.location.href = "personer_lyric.html"; // 다음 화면으로 이동
-    });
+
+
+// "Move to Next" 버튼 클릭 시 선택된 노래 배열과 함께 데이터 전송
+const nextButton = document.getElementById("next-button");
+nextButton.addEventListener("click", async () => {
+  console.log("Final Selected Songs:", selectedSongs);
+  alert(`You selected ${selectedSongs.length} songs!`);
+
+  // 서버로 데이터 전송
+  const response = await fetch('/select_songs', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ songs: selectedSongs })
+  });
+
+  const result = await response.json();
+  if (result.status === 'success') {
+    alert('Songs saved successfully!');
+  } else {
+    alert('Failed to save songs.');
+  }
+});
   </script>
 </body>
 </html>
