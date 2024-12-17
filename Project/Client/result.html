@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title><!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Recommendation Result</title>
+</head>
+<body>
+    <h1>Recommendation Result</h1>
+    <div id="result">
+        <p>Loading...</p>
+    </div>
+ <script>
+    // URL 파라미터에서 title 값 가져오기
+    const params = new URLSearchParams(window.location.search);
+    const title = params.get("title");
+
+    // 서버로부터 추천 결과 가져오기
+    async function fetchResult() {
+        if (title) {
+            const response = await fetch("/recommend_result", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ title: title })
+            });
+
+            const data = await response.json();
+
+            // 결과 표시
+            if (data.status === "success") {
+                document.getElementById("result").innerHTML = `
+                    <h2>Recommended Song</h2>
+                    <p><strong>Title:</strong> ${data.title}</p>
+                    <p><strong>Artist:</strong> ${data.artist}</p>
+                    <p><strong>Distance:</strong> ${data.distance.toFixed(4)}</p>
+                `;
+            } else {
+                document.getElementById("result").innerHTML = `<p>Error: ${data.message}</p>`;
+            }
+        } else {
+            document.getElementById("result").innerHTML = `<p>No song title provided.</p>`;
+        }
+    }
+    fetchResult();
+</script>
+</body>
+</html>
+</title>
+</head>
+<body>
+
+</body>
+</html>

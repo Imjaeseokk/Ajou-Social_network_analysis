@@ -110,7 +110,6 @@
   <script>
     // 선택된 노래들을 저장하는 배열
     const selectedSongs = [];
-
     const musicGrid = document.getElementById("music-grid");
 
     // 노래를 클릭하면 선택/선택 해제 상태를 변경
@@ -152,17 +151,17 @@
 
 
 // "Move to Next" 버튼 클릭 시 선택된 노래 배열과 함께 데이터 전송
-const nextButton = document.getElementById("next-button");
-nextButton.addEventListener("click", async () => {
-  console.log("Final Selected Songs:", selectedSongs);
-  alert(`You selected ${selectedSongs.length} songs!`);
+      const nextButton = document.getElementById("next-button");
+        nextButton.addEventListener("click", async () => {
+        console.log("Final Selected Songs:", selectedSongs);
+      alert(`You selected ${selectedSongs.length} songs!`);
 
-  // 서버로 데이터 전송
-  const response = await fetch('/select_songs', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ songs: selectedSongs })
-  });
+        // 서버로 노래 전송
+        const response = await fetch("/recommend", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ songs: selectedSongs })
+        });
 
   const result = await response.json();
   if (result.status === 'success') {
