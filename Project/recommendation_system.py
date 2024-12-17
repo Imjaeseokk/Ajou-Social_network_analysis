@@ -6,6 +6,8 @@ from pathlib import Path
 BASE_DIR = Path(__file__).resolve().parent
 file_path = BASE_DIR / "database" / "song_lyric_sentiment_result.csv"
 
+print(file_path)
+
 # 데이터 불러오기
 try:
     df = pd.read_csv(file_path)

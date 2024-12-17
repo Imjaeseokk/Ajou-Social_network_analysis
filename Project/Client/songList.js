@@ -5,8 +5,8 @@ const songList = [
   { title: "Love Story", artist: "Taylor Swift" },
   { title: "Make It Right", artist: "BTS (방탄소년단)" },
   { title: "7 rings", artist: "Ariana Grande" },
-  { title: "Watermelon Sugar", artist: "Harry Styles" },
-  { title: "Drivers License", artist: "Olivia Rodrigo" },
-  { title: "Good 4 U", artist: "Olivia Rodrigo" },
-  { title: "Someone Like You", artist: "Adele" },
+  { title: "Yellow", artist: "Coldplay" },
+  { title: "Fix You", artist: "Coldplay" },
+  { title: "Baby", artist: "Justin Bieber" },
+  { title: "Part of Me", artist: "Katy Perry" },
 ];
