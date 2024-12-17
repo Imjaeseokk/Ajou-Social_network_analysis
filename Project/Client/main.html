@@ -106,7 +106,7 @@
   <div class="logo-text">DIVE TO VIBE</div>
 
   <!-- Load songList.js -->
-  <script src="songList.js"></script>
+  <script src="/static/songList.js"></script>
   <script>
     // 선택된 노래들을 저장하는 배열
     const selectedSongs = [];
@@ -153,9 +153,24 @@
 // "Move to Next" 버튼 클릭 시 선택된 노래 배열과 함께 데이터 전송
       const nextButton = document.getElementById("next-button");
         nextButton.addEventListener("click", async () => {
-        console.log("Final Selected Songs:", selectedSongs);
-      alert(`You selected ${selectedSongs.length} songs!`);
+          console.log("Final Selected Songs:", selectedSongs);
+          alert(`You selected ${selectedSongs.length} songs!`);
 
+        // 서버로 노래 전송
+          // const response = await fetch("/recommend", {
+          //   method: "POST",
+          //   headers: { "Content-Type": "application/json" },
+          //   body: JSON.stringify({ songs: selectedSongs })
+          // });
+
+
+          // const result = await response.json();
+          // if (result.status === 'success') {
+          //   alert(`Recommended Song: ${result.title} by ${result.artist}`);
+          // } else {
+          //   alert('Failed to save songs.');
+          // }
+          try {
         // 서버로 노래 전송
         const response = await fetch("/recommend", {
             method: "POST",
@@ -163,13 +178,25 @@
             body: JSON.stringify({ songs: selectedSongs })
         });
 
-  const result = await response.json();
-  if (result.status === 'success') {
-    alert('Songs saved successfully!');
-  } else {
-    alert('Failed to save songs.');
-  }
-});
+        const result = await response.json();
+
+        if (result.status === 'success') {
+            // 추천 결과를 URL 파라미터에 담아 result.html로 이동
+            const params = new URLSearchParams({
+                title: result.title,
+                artist: result.artist,
+                distance: result.distance
+            });
+            window.location.href = `/result?${params.toString()}`;
+        } else {
+            alert(`Failed to recommend a song: ${result.message}`);
+        }
+        } catch (error) {
+          console.error("Error:", error);
+          alert(`Error occurred: ${error.message}`);
+        }
+
+    });
   </script>
 </body>
 </html>

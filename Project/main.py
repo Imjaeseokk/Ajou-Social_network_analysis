@@ -5,6 +5,7 @@ import csv
 from pathlib import Path
 from fastapi.templating import Jinja2Templates
 from recommendation_system import get_closest_song, df
+from pydantic import BaseModel
 
 app = FastAPI()
 
@@ -33,18 +34,42 @@ async def result_page(request: Request):
     return templates.TemplateResponse("result.html", {"request": request})
 
 # 추천 로직 수행: 노래 제목을 기반으로 가장 유사한 노래 반환
+# @app.post("/recommend", response_class=JSONResponse)
+# async def recommend(title: str = Form(...)):
+#     try:
+#         closest_song = get_closest_song(df, title)
+#         return {
+#             "status": "success",
+#             "title": closest_song["Title"],
+#             "artist": closest_song.get("Artist", "Unknown"),
+#             "distance": closest_song["Distance"]
+#         }
+#     except ValueError as e:
+#         return {"status": "error", "message": str(e)}
+
+class RecommendationRequest(BaseModel):
+    songs: list  # 클라이언트에서 보낸 'selectedSongs' 리스트
+
 @app.post("/recommend", response_class=JSONResponse)
-async def recommend(title: str = Form(...)):
+async def recommend(request: RecommendationRequest):
     try:
-        closest_song = get_closest_song(df, title)
+        # 예시 로직: 첫 번째 선택된 노래의 제목을 기반으로 추천
+        selected_title = request.songs[0]["title"]
+        closest_song = get_closest_song(df, selected_title)
+        print(closest_song)
         return {
             "status": "success",
             "title": closest_song["Title"],
             "artist": closest_song.get("Artist", "Unknown"),
             "distance": closest_song["Distance"]
         }
+    except IndexError:
+        return {"status": "error", "message": "No songs selected."}
     except ValueError as e:
         return {"status": "error", "message": str(e)}
+
+
+
 
 # 노래 선택 결과 저장
 @app.post("/save_selected", response_class=JSONResponse)
@@ -60,3 +85,24 @@ async def save_selected(title: str = Form(...), artist: str = Form(...)):
 
 # Static 파일 서빙 (CSS, JS, 이미지 등)
 app.mount("/static", StaticFiles(directory=CLIENT_FOLDER), name="static")
+
+# 요청 데이터 모델 정의
+class TitleRequest(BaseModel):
+    title: str
+
+@app.post("/recommend_result", response_class=JSONResponse)
+async def recommend_result(request: TitleRequest):
+    try:
+        # 요청에서 title 값을 가져옴
+        selected_title = request.title
+        closest_song = get_closest_song(df, selected_title)
+
+        # 추천 결과 반환
+        return {
+            "status": "success",
+            "title": closest_song["Title"],
+            "artist": closest_song.get("Artist", "Unknown"),
+            "distance": closest_song["Distance"]
+        }
+    except ValueError as e:
+        return {"status": "error", "message": str(e)}
