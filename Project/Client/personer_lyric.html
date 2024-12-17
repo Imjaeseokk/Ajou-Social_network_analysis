@@ -89,18 +89,31 @@
     <button id="next-button">Next Page</button>
   </div>
 
-  <script>
-    // 다음 버튼 이벤트
+<script>
     const nextButton = document.getElementById("next-button");
-    nextButton.addEventListener("click", () => {
-      const lyric = document.getElementById("lyric-input").value.trim();
-      if (lyric) {
-        alert(`저장된 가사: "${lyric}"`); // 저장 확인 메시지
-        window.location.href = "next_page.html"; // 다음 페이지로 이동
-      } else {
-        alert("가사를 입력해주세요!");
-      }
+
+    nextButton.addEventListener("click", async () => {
+        const lyric = document.getElementById("lyric-input").value.trim();
+
+        if (lyric) {
+            const response = await fetch("/save_lyric", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ lyric: lyric })
+            });
+
+            const result = await response.json();
+
+            if (result.status === "success") {
+                alert("Lyric saved successfully!");
+                window.location.href = "/"; // 메인 페이지로 이동
+            } else {
+                alert("Failed to save lyric.");
+            }
+        } else {
+            alert("Please enter a lyric!");
+        }
     });
-  </script>
+</script>
 </body>
 </html>
