@@ -45,7 +45,8 @@
       text-align: center;
       background: #1e1e1e;
       padding: 10px;
-      border-radius: 50%;
+      /* border-radius: 50%; */
+      border-radius: 10px; /* 직사각형으로 변경 */
       transition: transform 0.2s, background-color 0.2s;
       overflow: hidden;
       display: flex;
@@ -61,9 +62,12 @@
       background-color: #333; /* 선택 시 배경색 변경 */
     }
     .album img {
-      width: 100px;
-      height: 100px;
-      border-radius: 50%;
+      /* width: 100px;
+      height: 100px; */
+      width: 150px; /* 정사각형 이미지 크기 */
+      height: 150px; /* 정사각형 이미지 크기 */
+      border-radius: 10px; /* 직사각형 안에 정사각형 */
+      /* border-radius: 50%; */
       object-fit: cover;
     }
     .song-title {
@@ -132,11 +136,16 @@
     songList.forEach(song => {
       const album = document.createElement("div");
       album.classList.add("album");
+      // album.innerHTML = `
+      //   <img src="https://via.placeholder.com/150" alt="${song.title}" />
+      //   <div class="song-title">${song.title}</div>
+      //   <div class="artist-name">${song.artist}</div>
+      // `;
       album.innerHTML = `
-        <img src="https://via.placeholder.com/100" alt="${song.title}" />
-        <div class="song-title">${song.title}</div>
-        <div class="artist-name">${song.artist}</div>
-      `;
+            <img src="${song.imageUrl}" alt="${song.title}" />
+            <div class="song-title">${song.title}</div>
+            <div class="artist-name">${song.artist}</div>
+        `;
 
       // 클릭 이벤트 리스너 추가
       album.addEventListener("click", () => {

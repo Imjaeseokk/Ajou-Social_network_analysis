@@ -12,6 +12,11 @@ app = FastAPI()
 # Path to the Client folder where HTML files are located
 BASE_DIR = Path(__file__).resolve().parent
 CLIENT_FOLDER = BASE_DIR / "Client"
+DATABASE_FOLDER = BASE_DIR / "database"
+
+app.mount("/static", StaticFiles(directory=CLIENT_FOLDER), name="static")
+app.mount("/images", StaticFiles(directory=DATABASE_FOLDER), name="images")
+
 templates = Jinja2Templates(directory=CLIENT_FOLDER)
 
 # Path to the CSV file where selected songs will be stored
