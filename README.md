@@ -10,7 +10,7 @@
 
 
 ## 🎤 Presentation 
-[![Slide1](./presentation/slides/1.png)](https://github.com/Imjaeseokk/Ajou-Social_network_analysis/tree/main/Project/presentation)
+[![Slide1](./project/presentation/slides/1.png)](https://github.com/Imjaeseokk/Ajou-Social_network_analysis/tree/main/Project/presentation)
 
 
 ## 📁 Repository Structure
